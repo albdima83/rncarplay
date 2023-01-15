@@ -12,4 +12,6 @@
 + (MKMapItem*)MKMapItem:(id)json;
 + (CPPointOfInterest*)CPPointOfInterest:(id)json;
 + (CPAlertActionStyle)CPAlertActionStyle:(id)json;
++ (UIImage *)UIImage:(id)json;
+
 @end

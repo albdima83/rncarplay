@@ -76,4 +76,46 @@ RCT_ENUM_CONVERTER(CPPanDirection, (@{
     return CPAlertActionStyleDefault;
 }
 
++ (UIImage *)UIImage:(id)json
+{
+  if (!json) {
+    return nil;
+  }
+  
+  __block UIImage *image;
+  if (!RCTIsMainQueue()) {
+    // It seems that none of the UIImage loading methods can be guaranteed
+    // thread safe, so we'll pick the lesser of two evils here and block rather
+    // than run the risk of crashing
+    NSLog(@"Calling [RCTConvert UIImage:] on a background thread is not recommended");
+    RCTUnsafeExecuteOnMainQueueSync(^{
+      image = [self UIImage:json];
+    });
+    return image;
+  }
+
+  if ([json isMemberOfClass:[NSString class]]){
+      NSLog(@"json is string");
+      NSString *url_ = json;
+      NSURL *url = [NSURL URLWithString:url_];
+      if(url){
+          NSString *scheme = url.scheme.lowercaseString;
+          if ([scheme isEqualToString:@"file"]) {
+              image = [UIImage imageWithContentsOfFile:url_];
+          } else if ([scheme isEqualToString:@"data"]) {
+            image = [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
+          } else if ([scheme isEqualToString:@"http"]) {
+            image = [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
+          } else {
+            RCTLogConvertError(json, @"an image. Only local files or data URIs are supported.");
+            return nil;
+          }
+      }
+
+  }
+
+  return image;
+}
+
+
 @end

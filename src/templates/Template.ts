@@ -115,9 +115,9 @@ export class Template<P> {
 
   public parseConfig(config: any) {
     const result = traverse(config).map(function node(x) {
-      if (String(this.key).match(/[Ii]mage$/)) {
-        this.update(resolveAssetSource(x));
-      }
+      // if (String(this.key).match(/[Ii]mage$/)) {
+      //   this.update(resolveAssetSource(x));
+      // }
     });
     return JSON.parse(JSON.stringify(result));
   }
