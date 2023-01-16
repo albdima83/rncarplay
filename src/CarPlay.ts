@@ -14,7 +14,7 @@ import { NowPlayingTemplate } from './templates/NowPlayingTemplate';
 
 const { RNCarPlay } = NativeModules;
 
-type PushableTemplates =
+export type PushableTemplates =
   | MapTemplate
   | SearchTemplate
   | GridTemplate
