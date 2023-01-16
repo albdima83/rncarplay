@@ -23,7 +23,7 @@ type PushableTemplates =
   | InformationTemplate
   | ContactTemplate
   | NowPlayingTemplate;
-type PresentableTemplates = AlertTemplate | ActionSheetTemplate | VoiceControlTemplate;
+export type PresentableTemplates = AlertTemplate | ActionSheetTemplate | VoiceControlTemplate;
 
 /**
  * A controller that manages all user interface elements appearing on your map displayed on the CarPlay screen.

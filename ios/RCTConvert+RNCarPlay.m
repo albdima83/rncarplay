@@ -93,7 +93,16 @@ RCT_ENUM_CONVERTER(CPPanDirection, (@{
     });
     return image;
   }
-
+  /*
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    dispatch_async(queue, ^{
+              NSData * imageData = [NSData dataWithContentsOfURL:url];
+              dispatch_async(dispatch_get_main_queue(), ^{
+                  UIImage * img = [UIImage imageWithData:imageData];
+                  image = img;
+              });
+    });
+   */
   if ([json isMemberOfClass:[NSString class]]){
       NSLog(@"json is string");
       NSString *url_ = json;
@@ -110,6 +119,8 @@ RCT_ENUM_CONVERTER(CPPanDirection, (@{
             RCTLogConvertError(json, @"an image. Only local files or data URIs are supported.");
             return nil;
           }
+      }else{
+          return [UIImage image]
       }
 
   }
