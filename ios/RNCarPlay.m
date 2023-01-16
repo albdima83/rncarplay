@@ -15,8 +15,9 @@
     store.interfaceController = interfaceController;
     store.window = window;
     [store setConnected:true];
-
+    
     RNCarPlay *cp = [RNCarPlay allocWithZone:nil];
+    cp.isNowPlayingActive = true;
     if (cp.bridge) {
         [cp sendEventWithName:@"didConnect" body:@{}];
     }
@@ -41,6 +42,17 @@ RCT_EXPORT_MODULE();
         sharedInstance = [super allocWithZone:zone];
     });
     return sharedInstance;
+}
+
+- (id) init{
+    if (@available(iOS 14.0, *)) {
+        CPNowPlayingTemplate *nowPlayingTemplate = [CPNowPlayingTemplate sharedTemplate];
+        [nowPlayingTemplate addObserver:self];
+        
+    } else {
+        // Fallback on earlier versions
+    }
+    return self;
 }
 
 - (NSArray<NSString *> *)supportedEvents
@@ -552,10 +564,19 @@ RCT_EXPORT_METHOD(dismissPanningInterface:(NSString *)templateId animated:(BOOL)
 }
 
 RCT_EXPORT_METHOD(enableNowPlaying:(BOOL)enable) {
-    if (enable && !isNowPlayingActive) {
-        [CPNowPlayingTemplate.sharedTemplate addObserver:self];
+    if (enable && isNowPlayingActive) {
+        if (@available(iOS 14.0, *)) {
+            [CPNowPlayingTemplate.sharedTemplate addObserver:self];
+            
+        } else {
+            // Fallback on earlier versions
+        }
     } else if (!enable && isNowPlayingActive) {
-        [CPNowPlayingTemplate.sharedTemplate removeObserver:self];
+        if (@available(iOS 14.0, *)) {
+            [CPNowPlayingTemplate.sharedTemplate removeObserver:self];
+        } else {
+            // Fallback on earlier versions
+        }
     }
 }
 
@@ -998,8 +1019,10 @@ RCT_EXPORT_METHOD(updateMapTemplateMapButtons:(NSString*) templateId mapButtons:
 - (void)sendTemplateEventWithName:(CPTemplate *)template name:(NSString*)name json:(NSDictionary*)json {
     NSMutableDictionary *body = [[NSMutableDictionary alloc] initWithDictionary:json];
     NSDictionary *userInfo = [template userInfo];
-    [body setObject:[userInfo objectForKey:@"templateId"] forKey:@"templateId"];
-    [self sendEventWithName:name body:body];
+    if([userInfo objectForKey:@"templateId"]){
+        [body setObject:[userInfo objectForKey:@"templateId"] forKey:@"templateId"];
+        [self sendEventWithName:name body:body];
+    }
 }
 
 
@@ -1107,17 +1130,17 @@ RCT_EXPORT_METHOD(updateMapTemplateMapButtons:(NSString*) templateId mapButtons:
 }
 
 # pragma TabBarTemplate
-- (void)tabBarTemplate:(CPTabBarTemplate *)tabBarTemplate didSelectTemplate:(__kindof CPTemplate *)selectedTemplate {
+- (void)tabBarTemplate:(CPTabBarTemplate *)tabBarTemplate didSelectTemplate:(__kindof CPTemplate *)selectedTemplate  API_AVAILABLE(ios(14.0)){
     NSString* selectedTemplateId = [[selectedTemplate userInfo] objectForKey:@"templateId"];
     [self sendTemplateEventWithName:tabBarTemplate name:@"didSelectTemplate" json:@{@"selectedTemplateId":selectedTemplateId}];
 }
 
 # pragma PointOfInterest
--(void)pointOfInterestTemplate:(CPPointOfInterestTemplate *)pointOfInterestTemplate didChangeMapRegion:(MKCoordinateRegion)region {
+-(void)pointOfInterestTemplate:(CPPointOfInterestTemplate *)pointOfInterestTemplate didChangeMapRegion:(MKCoordinateRegion)region  API_AVAILABLE(ios(14.0)){
     // noop
 }
 
--(void)pointOfInterestTemplate:(CPPointOfInterestTemplate *)pointOfInterestTemplate didSelectPointOfInterest:(CPPointOfInterest *)pointOfInterest {
+-(void)pointOfInterestTemplate:(CPPointOfInterestTemplate *)pointOfInterestTemplate didSelectPointOfInterest:(CPPointOfInterest *)pointOfInterest  API_AVAILABLE(ios(14.0)){
     [self sendTemplateEventWithName:pointOfInterestTemplate name:@"didSelectPointOfInterest" json:[pointOfInterest userInfo]];
 }
 
@@ -1141,12 +1164,14 @@ RCT_EXPORT_METHOD(updateMapTemplateMapButtons:(NSString*) templateId mapButtons:
 
 # pragma NowPlaying
 
-- (void)nowPlayingTemplateUpNextButtonTapped:(CPNowPlayingTemplate *)nowPlayingTemplate {
-
+- (void)nowPlayingTemplateUpNextButtonTapped:(CPNowPlayingTemplate *)nowPlayingTemplate  API_AVAILABLE(ios(14.0)){
+    int a = 0;
+    a =  a + 1;
 }
 
-- (void)nowPlayingTemplateAlbumArtistButtonTapped:(CPNowPlayingTemplate *)nowPlayingTemplate {
-
+- (void)nowPlayingTemplateAlbumArtistButtonTapped:(CPNowPlayingTemplate *)nowPlayingTemplate  API_AVAILABLE(ios(14.0)){
+    int a = 0;
+    a =  a + 1;
 }
 
 @end

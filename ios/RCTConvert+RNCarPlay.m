@@ -103,7 +103,7 @@ RCT_ENUM_CONVERTER(CPPanDirection, (@{
               });
     });
    */
-  if ([json isMemberOfClass:[NSString class]]){
+  if ([json isKindOfClass:[NSString class]]){
       NSLog(@"json is string");
       NSString *url_ = json;
       NSURL *url = [NSURL URLWithString:url_];
@@ -113,7 +113,7 @@ RCT_ENUM_CONVERTER(CPPanDirection, (@{
               image = [UIImage imageWithContentsOfFile:url_];
           } else if ([scheme isEqualToString:@"data"]) {
             image = [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
-          } else if ([scheme isEqualToString:@"http"]) {
+          } else if ([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"] || [scheme isEqualToString:@"ftp"]) {
             image = [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
           } else {
             RCTLogConvertError(json, @"an image. Only local files or data URIs are supported.");
