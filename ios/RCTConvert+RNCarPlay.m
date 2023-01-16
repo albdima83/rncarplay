@@ -120,7 +120,7 @@ RCT_ENUM_CONVERTER(CPPanDirection, (@{
             return nil;
           }
       }else{
-          return [UIImage image]
+          return [UIImage imageNamed:url_];
       }
 
   }
