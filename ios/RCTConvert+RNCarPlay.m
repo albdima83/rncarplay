@@ -128,5 +128,4 @@ RCT_ENUM_CONVERTER(CPPanDirection, (@{
   return image;
 }
 
-
 @end
