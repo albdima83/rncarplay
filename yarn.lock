@@ -139,6 +139,11 @@ callsites@^3.0.0:
   resolved "https://registry.yarnpkg.com/callsites/-/callsites-3.1.0.tgz#b3630abd8943432f54b3f0519238e33cd7df2f73"
   integrity sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==
 
+carplay@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/carplay/-/carplay-1.0.0.tgz#99f45a164b4eb23a4303bdf5070a62de72764313"
+  integrity sha512-K+ynn78ODDflRVxpOPBZ38Lrr6Z70qkiQngIjkH9EGlLzP9n6CE/GX8kEUGZRErAn45GFt3z6EeN+4IImNY1WQ==
+
 chalk@^2.0.0, chalk@^2.3.0:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"

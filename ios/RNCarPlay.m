@@ -33,6 +33,12 @@
     }
 }
 
++ (BOOL)requiresMainQueueSetup
+{
+  return NO;
+}
+
+
 RCT_EXPORT_MODULE();
 
 + (id)allocWithZone:(NSZone *)zone {
