@@ -1,6 +1,6 @@
 {
   "name": "react-native-carplay",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "description": "CarPlay for React Native",
   "main": "lib/index.js",
   "files": [
