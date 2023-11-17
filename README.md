@@ -35,7 +35,7 @@ Whether you are running through a simulator or building the app for distribution
 1. Install the library
 
 ```bash
-yarn add react-native-carplay --save
+pnpm add react-native-carplay --save
 ```
 
 2. Link using normal or cocoapods method
@@ -424,21 +424,21 @@ To run it you must first install dependencies and pods.
 1. install dependencies and build `react-native-carplay`
 
 ```bash
-yarn install
+pnpm install
 ```
 
 2. move to example dir and install dependencies
 
 ```bash
 cd example
-yarn install
+pnpm install
 ```
 
 3. run build dev in root dir, this will copy the output to the examples node modules.
 
 ```base
 cd ..
-yarn build:dev
+pnpm build:dev
 ```
 
 4. install pods in example app and start the metro bundler

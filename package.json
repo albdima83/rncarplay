@@ -11,7 +11,7 @@
   ],
   "podspecPath": "./react-native-carplay.podspec",
   "scripts": {
-    "prepare": "yarn run build",
+    "prepare": "pnpm run build",
     "prettier": "prettier --write '**/*.{json,md,js,jsx,ts,tsx}'",
     "tslint": "tslint --fix 'src/**/*.{ts,tsx}' -p .",
     "build": "tsc",

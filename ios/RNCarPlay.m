@@ -2,6 +2,8 @@
 #import <React/RCTConvert.h>
 #import <React/RCTRootView.h>
 
+
+
 @implementation RNCarPlay
 
 @synthesize interfaceController;
@@ -146,7 +148,6 @@ RCT_EXPORT_METHOD(createTemplate:(NSString *)templateId config:(NSDictionary*)co
     NSString *title = [RCTConvert NSString:config[@"title"]];
     NSArray *leadingNavigationBarButtons = [self parseBarButtons:[RCTConvert NSArray:config[@"leadingNavigationBarButtons"]] templateId:templateId];
     NSArray *trailingNavigationBarButtons = [self parseBarButtons:[RCTConvert NSArray:config[@"trailingNavigationBarButtons"]] templateId:templateId];
-
     CPTemplate *template = [[CPTemplate alloc] init];
 
     if ([type isEqualToString:@"search"]) {
@@ -284,8 +285,7 @@ RCT_EXPORT_METHOD(createTemplate:(NSString *)templateId config:(NSDictionary*)co
     if (config[@"tabImage"]) {
         template.tabImage = [RCTConvert UIImage:config[@"tabImage"]];
     }
-
-
+    
     [template setUserInfo:@{ @"templateId": templateId }];
     [store setTemplate:templateId template:template];
 }
@@ -391,7 +391,38 @@ RCT_EXPORT_METHOD(setRootTemplate:(NSString *)templateId animated:(BOOL)animated
     if (template) {
         [store.interfaceController setRootTemplate:template animated:animated completion:^(BOOL done, NSError * _Nullable err) {
             NSLog(@"error %@", err);
-            // noop
+            if(err != nil) return;
+            if([template isKindOfClass:[CPListTemplate class]]){
+                CPListTemplate* listTemplate = (CPListTemplate *) template;
+                NSArray <CPListSection *> *sections = listTemplate.sections;
+                if(sections != nil){
+                    for (int countSection = 0; countSection < sections.count; countSection++) {
+                        CPListSection* section = sections[countSection];
+                        if(section != nil){
+                            if(section.items != nil){
+                                for (int countItem = 0; countItem < section.items.count; countItem++) {
+                                    CPListItem *item = (CPListItem *)section.items[countItem];
+                                    if(item != nil && item.userInfo != nil && item.userInfo[@"imgUrl"]){
+                                        NSString * imgUrl = item.userInfo[@"imgUrl"];
+                                        item.userInfo[@"itemIndex"] = [NSNumber numberWithInt:countItem];
+                                        item.userInfo[@"sectionIndex"] = [NSNumber numberWithInt:countSection];
+                                        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+                                            UIImage *_image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[RCTConvert NSString:imgUrl]]]];
+                                            if(_image != nil){
+                                                dispatch_async(dispatch_get_main_queue(), ^(void){
+                                                    if (@available(iOS 14.0, *)) {
+                                                        item.image = _image;
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }];
     } else {
         NSLog(@"Failed to find template %@", template);
@@ -404,7 +435,36 @@ RCT_EXPORT_METHOD(pushTemplate:(NSString *)templateId animated:(BOOL)animated) {
     if (template) {
         [store.interfaceController pushTemplate:template animated:animated completion:^(BOOL done, NSError * _Nullable err) {
             NSLog(@"error %@", err);
-            // noop
+            if(err != nil) return;
+            if([template isKindOfClass:[CPListTemplate class]]){
+                CPListTemplate* listTemplate = (CPListTemplate *) template;
+                NSArray <CPListSection *> *sections = listTemplate.sections;
+                if(sections != nil){
+                    for (int countSection = 0; countSection < sections.count; countSection++) {
+                        CPListSection* section = sections[countSection];
+                        if(section != nil){
+                            if(section.items != nil){
+                                for (int countItem = 0; countItem < section.items.count; countItem++) {
+                                    CPListItem *item = (CPListItem *)section.items[countItem];
+                                    if(item != nil && item.userInfo != nil && item.userInfo[@"imgUrl"]){
+                                        NSString * imgUrl = item.userInfo[@"imgUrl"];
+                                        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+                                            UIImage *_image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[RCTConvert NSString:imgUrl]]]];
+                                            if(_image != nil){
+                                                dispatch_async(dispatch_get_main_queue(), ^(void){
+                                                    if (@available(iOS 14.0, *)) {
+                                                        item.image = _image;
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }];
     } else {
         NSLog(@"Failed to find template %@", template);
@@ -446,7 +506,38 @@ RCT_EXPORT_METHOD(presentTemplate:(NSString *)templateId animated:(BOOL)animated
     if (template) {
         [store.interfaceController presentTemplate:template animated:animated completion:^(BOOL done, NSError * _Nullable err) {
             NSLog(@"error %@", err);
-            // noop
+            if(err != nil) return;
+            if([template isKindOfClass:[CPListTemplate class]]){
+                CPListTemplate* listTemplate = (CPListTemplate *) template;
+                NSArray <CPListSection *> *sections = listTemplate.sections;
+                if(sections != nil){
+                    for (int countSection = 0; countSection < sections.count; countSection++) {
+                        CPListSection* section = sections[countSection];
+                        if(section != nil){
+                            if(section.items != nil){
+                                for (int countItem = 0; countItem < section.items.count; countItem++) {
+                                    CPListItem *item = (CPListItem *)section.items[countItem];
+                                    if(item != nil && item.userInfo != nil && item.userInfo[@"imgUrl"]){
+                                        NSString * imgUrl = item.userInfo[@"imgUrl"];
+                                        item.userInfo[@"itemIndex"] = [NSNumber numberWithInt:countItem];
+                                        item.userInfo[@"sectionIndex"] = [NSNumber numberWithInt:countSection];
+                                        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+                                            UIImage *_image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[RCTConvert NSString:imgUrl]]]];
+                                            if(_image != nil){
+                                                dispatch_async(dispatch_get_main_queue(), ^(void){
+                                                    if (@available(iOS 14.0, *)) {
+                                                        item.image = _image;
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }];
     } else {
         NSLog(@"Failed to find template %@", template);
@@ -826,14 +917,19 @@ RCT_EXPORT_METHOD(updateMapTemplateMapButtons:(NSString*) templateId mapButtons:
         NSString *_detailText = [item objectForKey:@"detailText"];
         NSString *_text = [item objectForKey:@"text"];
         UIImage *_image = [RCTConvert UIImage:[item objectForKey:@"image"]];
+        /*
         if (item[@"imgUrl"]) {
             _image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[RCTConvert NSString:item[@"imgUrl"]]]]];
-        }
+        }*/
         CPListItem *_item = [[CPListItem alloc] initWithText:_text detailText:_detailText image:_image showsDisclosureIndicator:_showsDisclosureIndicator];
         if ([item objectForKey:@"isPlaying"]) {
             [_item setPlaying:[RCTConvert BOOL:[item objectForKey:@"isPlaying"]]];
         }
-        [_item setUserInfo:@{ @"index": @(index) }];
+        id userInfo = @{ @"index": @(index)};
+        if (item[@"imgUrl"]) {
+            userInfo = @{ @"index": @(index), @"imgUrl": [RCTConvert NSString:item[@"imgUrl"]] };
+        }
+        [_item setUserInfo:userInfo];
         [_items addObject:_item];
         index = index + 1;
     }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D927D893A5BF661E9B194BD /* Pods_RNCarPlay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41C957B81558DD95160B19F8 /* Pods_RNCarPlay.framework */; };
 		E344BCC72249585C006FD80D /* RNCarPlay.m in Sources */ = {isa = PBXBuildFile; fileRef = E344BBF222494D53006FD80D /* RNCarPlay.m */; };
 		E344BCC82249585C006FD80D /* RNCPStore.m in Sources */ = {isa = PBXBuildFile; fileRef = E344BBF422494D9D006FD80D /* RNCPStore.m */; };
 		E35223EB224BD4E500623F30 /* RCTConvert+RNCarPlay.m in Sources */ = {isa = PBXBuildFile; fileRef = E35223EA224BD4E500623F30 /* RCTConvert+RNCarPlay.m */; };
@@ -25,6 +26,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		41C957B81558DD95160B19F8 /* Pods_RNCarPlay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RNCarPlay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B05FCC491C9CDDCD12E5BC2 /* Pods-RNCarPlay.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNCarPlay.release.xcconfig"; path = "Target Support Files/Pods-RNCarPlay/Pods-RNCarPlay.release.xcconfig"; sourceTree = "<group>"; };
+		D26C97F23D2627D2BDBF805A /* Pods-RNCarPlay.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNCarPlay.debug.xcconfig"; path = "Target Support Files/Pods-RNCarPlay/Pods-RNCarPlay.debug.xcconfig"; sourceTree = "<group>"; };
 		E344BBEA22494CBD006FD80D /* RNCarPlay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNCarPlay.h; sourceTree = "<group>"; };
 		E344BBF222494D53006FD80D /* RNCarPlay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNCarPlay.m; sourceTree = "<group>"; };
 		E344BBF422494D9D006FD80D /* RNCPStore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNCPStore.m; sourceTree = "<group>"; };
@@ -39,12 +43,31 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D927D893A5BF661E9B194BD /* Pods_RNCarPlay.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E53485BF9BA4E8F84023451 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				41C957B81558DD95160B19F8 /* Pods_RNCarPlay.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B9D69F625F9F68EEE88D5B80 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D26C97F23D2627D2BDBF805A /* Pods-RNCarPlay.debug.xcconfig */,
+				5B05FCC491C9CDDCD12E5BC2 /* Pods-RNCarPlay.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		E344BBDD22494CBD006FD80D = {
 			isa = PBXGroup;
 			children = (
@@ -55,6 +78,8 @@
 				E344BBF622494DAC006FD80D /* RNCPStore.h */,
 				E344BBF422494D9D006FD80D /* RNCPStore.m */,
 				E344BBE822494CBD006FD80D /* Products */,
+				B9D69F625F9F68EEE88D5B80 /* Pods */,
+				0E53485BF9BA4E8F84023451 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -73,6 +98,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E344BCC422495851006FD80D /* Build configuration list for PBXNativeTarget "RNCarPlay" */;
 			buildPhases = (
+				0CDDD257A9E2E76C005898FC /* [CP] Check Pods Manifest.lock */,
 				E344BCBA22495851006FD80D /* Sources */,
 				E344BCBB22495851006FD80D /* Frameworks */,
 				E344BCBC22495851006FD80D /* CopyFiles */,
@@ -117,6 +143,31 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0CDDD257A9E2E76C005898FC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RNCarPlay-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E344BCBA22495851006FD80D /* Sources */ = {
@@ -252,6 +303,7 @@
 		};
 		E344BCC522495851006FD80D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D26C97F23D2627D2BDBF805A /* Pods-RNCarPlay.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -273,6 +325,7 @@
 		};
 		E344BCC622495851006FD80D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5B05FCC491C9CDDCD12E5BC2 /* Pods-RNCarPlay.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
